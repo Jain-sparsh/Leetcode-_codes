@@ -12,3 +12,34 @@ public:
     }
 
 };
+
+
+// dp sol
+class Solution {
+public:
+    int solve(vector<int>& prices,int buy,int i , vector<vector<int>> & dp){
+        if(i==prices.size())return 0;
+        if(dp[i][buy]!=-1)return dp[i][buy];
+
+        int profit=0;
+        if(buy){
+            int kamkro= -prices[i]+solve(prices,!buy,i+1,dp);
+            int chdna=0+solve(prices,buy,i+1,dp);
+            profit=max(kamkro,chdna);
+
+        }
+        else{
+             int kamkro= +prices[i]+solve(prices,!buy,i+1,dp);
+            int chdna=0+solve(prices,buy,i+1,dp);
+            profit=max(kamkro,chdna);
+
+        }
+        return dp[i][buy]=profit;
+
+    }
+    int maxProfit(vector<int>& prices) {
+        vector<vector<int>> dp(prices.size(),vector<int> (2,-1));
+        return solve(prices,1,0,dp);
+        
+    }
+};
