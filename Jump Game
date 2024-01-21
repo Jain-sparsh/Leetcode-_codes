@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool solve(vector<int> & num){
+        int reachable=0;
+        for(int i=0;i<num.size()-1;i++){
+            if(i>reachable) break;
+            if((i+num[i])>reachable && num[i]!=0)reachable=(i+num[i]);
+
+        }
+        if(reachable>=num.size()-1)return 1;
+        else return 0;
+    }
+    bool canJump(vector<int>& num) {
+        return solve(num);
+        
+    }
+};
