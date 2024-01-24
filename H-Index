@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        int paper=0;
+        int n=citations.size();
+        vector<int> cnt(n+1,0);
+        for(int x:citations){
+            if(x>=n)cnt[n]++;
+            else cnt[x]++;
+        }
+        for(int i=n;i>=0;i--){
+            paper+=cnt[i];
+            if(paper>=i)return i;
+        }
+        return 0;
+        
+    }
+};
