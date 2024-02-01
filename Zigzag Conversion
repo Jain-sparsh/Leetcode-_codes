@@ -1,0 +1,59 @@
+class Solution {
+public:
+    string convert(string s, int row) {
+        vector<string> ans(row);
+        if(row==1){
+            return s;
+        }
+
+        int i=0;
+        bool flag=0;
+        for(auto ch:s){
+            ans[i]+=ch;
+            if(i==0 || i== row-1){
+                flag=!flag;
+            }
+            if(flag){
+                i++;
+            }
+            else{i--;}
+        }
+        string res="";
+        for(auto x:ans){
+            res+=x;
+        }
+        return res;
+                                                  
+                                              
+                                         
+                                                  
+                                                     
+                                                     
+                                                      
+                                                          
+                                                  
+                                                         
+                                                           
+                                                                         
+                                                                          
+                                                                           
+                                                                            
+                                                                             
+                                                                              
+                                                                               
+                                                                                
+                                                                                 
+                                                                                  
+                                                                                   
+                                                                                    
+                                                                                     
+                                                                                      
+                                                                                       
+                                                                                        
+                                                                                         
+                                                                                          
+                                                                                           
+                                                                                             
+                                                                                             
+    }
+};
