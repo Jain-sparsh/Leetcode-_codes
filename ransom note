@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool canConstruct(string ran, string mag) {
+        vector<int>rn(26,0);
+        vector<int>mg(26,0);
+        for(int i=0;i<ran.length();i++){
+            rn[ran[i]-'a']++;
+        }
+        for(int i=0;i<mag.length();i++){
+            mg[mag[i]-'a']++;
+        }
+        for(int i=0;i<26;i++){
+            if(rn[i]>mg[i]){
+                return false;
+            }
+        }
+        return true;
+        
+    }
+};
