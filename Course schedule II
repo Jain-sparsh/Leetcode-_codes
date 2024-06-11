@@ -1,0 +1,50 @@
+class Solution {
+public:
+    bool dfs( int s , vector<bool> &vis, vector<bool> & curvis , vector<int> adj[], stack<int> &st){
+        vis[s]=true;
+        curvis[s]=true;
+        vector<int> list=adj[s];
+        for(auto x: list){
+            if(!vis[x]){
+                if(dfs(x,vis,curvis,adj,st)){return true;}
+            }
+            else if(vis[x]==true && curvis[x]==true){
+                return true;
+            }
+        }
+        st.push(s);
+        curvis[s]=false;
+        return false;
+
+    }
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        int n=numCourses;
+        int flag=1;
+        stack<int> st;
+        vector<bool> vis(n,false),curvis(n,false);
+        vector<int> adj[n];
+        for(auto x: prerequisites){
+            vector<int> data=x;
+            int a=x[0];
+            int b=x[1];
+            adj[b].push_back(a);
+        }
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                if(dfs(i,vis,curvis,adj,st)){
+                    flag=0;
+                }
+            }
+        } 
+        vector<int> ans;
+        if(flag==0){}
+        else {while(!st.empty()){
+            ans.push_back(st.top());
+            st.pop(); }
+        }
+        return ans;
+
+        }
+      
+    
+};
