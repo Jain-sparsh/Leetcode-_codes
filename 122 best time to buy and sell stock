@@ -1,0 +1,52 @@
+class Solution {
+public:
+    int solve(int index , int buy, vector<int>& prc , vector<vector<int>> & dp){
+        if(index==prc.size()){
+            return 0;
+        }
+        if(dp[index][buy]!=-1)return dp[index][buy];
+        int prf=0;
+        if(buy){
+            int cb=-prc[index] + solve(index + 1 , 0 , prc,dp);
+            int cs=0 + solve(index + 1 , 1 , prc,dp);
+            prf=max(cb,cs);
+
+        }
+        else{
+            int csell=prc[index] + solve(index + 1 , 1 , prc,dp);
+            int cs=0 + solve(index + 1 , 0 , prc,dp);
+            prf=max(cs,csell);
+
+        }
+        return dp[index][buy]= prf;
+    }
+    int solvetab(vector<int> & prc){
+         //vector<vector<int>> dp(prc.size()+1,vector<int>(2,0));
+           vector<int > cur(2,0);
+            vector<int > next(2,0);
+         for(int index=prc.size()-1;index>=0;index--){
+            for(int y=0;y<=1;y++){
+                 int prf=0;
+        if(y){
+            int cb=-prc[index] + next[0];
+            int cs=0 + next[1];
+            prf=max(cb,cs);
+
+        }
+        else{
+            int csell=prc[index] + next[1];
+            int cs=0 + next[0];
+            prf=max(cs,csell);
+
+        }
+         cur[y]= prf;
+            }
+            next=cur;
+         }
+         return next[1];
+    }
+    int maxProfit(vector<int>& prices) {
+       
+        return solvetab(prices);        
+    }
+};
