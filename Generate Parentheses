@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void solve(string cur , int open , int closed , int tot, vector<string> & ans){
+        if(cur.size()==2*tot){
+            ans.push_back(cur);
+            return ;
+
+        }
+        if(open<tot){
+            solve(cur + "(" , open+1,closed , tot , ans);
+        
+        }
+        if(closed<open){
+            solve(cur+")",open,closed+1,tot,ans);
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string> ans;
+        solve("",0,0,n,ans);
+
+        return ans;
+
+        
+    }
+};
