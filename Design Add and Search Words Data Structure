@@ -1,0 +1,73 @@
+ class TrieNode {
+    public:
+ TrieNode * child[26];
+    bool isterminal;
+    TrieNode(){
+        for(int i=0;i<26;i++){
+            child[i]=NULL;
+        }
+        isterminal=false;
+    }
+};
+class WordDictionary {
+public:
+TrieNode * root;
+    WordDictionary() {
+        root= new TrieNode();
+        
+    }
+    
+       void insertutil(TrieNode *root, string word){
+         if(word.length()==0){
+         root->isterminal=true;
+         return;
+        }
+        TrieNode *childn;
+        int x=word[0]-'a';
+        if(root->child[x] != NULL)
+            childn=root->child[x];
+        
+        else{
+            childn= new TrieNode();
+            root->child[x]=childn;
+        }
+        insertutil(childn,word.substr(1));
+    }
+    void addWord(string word) {
+        insertutil(root,word);
+        
+    }
+
+      bool searchutil(TrieNode * root, string word){
+        if(word.length()==0)return root->isterminal;
+
+         TrieNode *childn;
+         if(word[0]=='.'){
+            for(int i=0;i<26 ;i++){
+                if(root->child[i] && searchutil(root->child[i],word.substr(1) ) ) return true;
+            }
+
+         }
+         else{
+             int x=word[0]-'a';
+             if(root->child[x] && searchutil(root->child[x], word.substr(1)) )return true;
+
+         }
+         return false;}
+
+    bool search(string word) {
+        return searchutil(root,word);
+        
+    }
+    
+   
+        
+    
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */
