@@ -1,0 +1,55 @@
+class Solution {
+public:
+    int minsub(vector<int> &nums){
+        int s2=0;
+        int mini=INT_MAX;
+     
+        for(int i=0;i<nums.size();i++){
+            
+            s2+=nums[i];
+            mini=min(mini,s2);
+            if(s2>0)s2=0;
+        }
+        return mini;
+        
+    }
+
+    int maxsub(vector<int> &nums){
+        int s1=0;
+        int maxi=INT_MIN; 
+         for(int i=0;i<nums.size();i++)
+        { s1+=nums[i];
+            maxi=max(maxi,s1);
+            if(s1<0)s1=0;
+        }
+     return maxi;
+        
+    }
+    int maxSubarraySumCircular(vector<int>& nums) {
+        if(nums.size()==0){
+            return 0;
+
+        }
+
+        int x=1;
+        int ans=INT_MIN;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]>=0){
+                x=0;
+                break;
+            }
+            ans=max(ans,nums[i]);
+        }
+        if(x)return ans;
+        int s1=maxsub(nums);
+        int arrysum=0;
+        for(int i=0;i<nums.size();i++){
+            arrysum+=nums[i];
+        }
+        int s2=arrysum-minsub(nums);
+
+        return max(s1,s2);
+
+        
+    }
+};
