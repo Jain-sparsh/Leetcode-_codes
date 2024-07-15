@@ -1,0 +1,74 @@
+class TrieNode{
+    
+    public:
+    TrieNode * child[26];
+    bool isEnd;
+    string wd;
+    TrieNode(){
+        for(int i=0;i<26 ; i++){
+            child[i]=NULL;
+        }
+        isEnd=false;
+        wd="";
+
+    }
+
+};
+class Solution {
+public:
+    TrieNode * root;
+    void insertutil(TrieNode *root, string word, string & wrd){
+         if(word.length()==0){
+         root->isEnd=true;
+         root->wd=wrd;
+         return;
+        }
+        TrieNode *childn;
+        int x=word[0]-'a';
+        if(root->child[x] != NULL)
+            childn=root->child[x];
+        
+        else{
+            childn= new TrieNode();
+            root->child[x]=childn;
+        }
+        insertutil(childn,word.substr(1),wrd);
+    }
+
+    
+
+      
+       void dfs(vector<vector<char>>& board, int i , int j ,TrieNode * node ,  vector<vector<bool>> &vis, set<string>& ans){
+        if(i<0 || j<0 || i>=board.size() || j>=board[0].size())return ;
+         
+         node=node->child[(int)board[i][j]-'a'];
+         if(vis[i][j] || !node)return;
+         if(node->isEnd){ans.insert(node->wd);}
+         vis[i][j]=1;
+         dfs(board,i-1,j,node,vis,ans);
+         dfs(board,i,j-1,node,vis,ans);
+         dfs(board,i+1,j,node,vis,ans);
+         dfs(board,i,j+1,node,vis,ans);
+         vis[i][j]=0;
+
+       }
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        root=new TrieNode();
+       
+        set<string> ans2;
+        vector<vector<bool>> vis(board.size(),vector<bool>(board[0].size(),0));
+        for(auto x: words){
+            insertutil(root,x,x);
+        }
+        for(int i=0;i<board.size();i++){
+            for(int j=0;j<board[0].size();j++){
+                dfs(board , i , j , root , vis, ans2);
+            }
+        }
+         vector<string> ans(ans2.begin(),ans2.end());
+        return ans;
+
+        
+        
+    }
+};
