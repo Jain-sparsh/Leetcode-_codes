@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        int m=s.size();
+        int n=t.size();
+        int count=0;
+        int si=-1;
+        int ans=INT_MAX;
+       vector<int> mp1(256,0);
+       vector<int> mp2(256,0);
+       for (char x:t){
+        mp1[x]++;
+       }
+       int i=0,j=0;
+       while(j<m){
+        mp2[s[j]]++;
+        if(mp2[s[j]]<=mp1[s[j]] ){
+            count++;
+        }
+
+        while (count == n) {
+                
+                if (ans > j - i + 1) {
+                    ans = j - i + 1;
+                    si = i;
+                }
+                
+                mp2[s[i]]--;
+                if (mp2[s[i]] < mp1[s[i]]) {
+                    count--;
+                }
+                i++;
+            }
+
+        j++;
+       
+        
+
+       }
+
+       if(si==-1)return "";
+       else return s.substr(si,ans);
+        
+    }
+};
